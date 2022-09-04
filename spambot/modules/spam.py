@@ -1,9 +1,3 @@
-"""
-Credits to:
-  t.me/TeamGladiators
-  t.me/TeamUltroid
-"""
-
 from spambot import gladiator
 from spambot import (
     DEV_USERS,
@@ -33,7 +27,7 @@ async def gladiators(event):
         await event.client.send_message(event.chat, mesg)
         await asyncio.sleep(1.5)
     except Exception as xy:
-      await event.reply("Oops!! Something went wrong, forward this message to @Gladiators_Support\n\n" + str(xy))
+      await event.reply("Oops!! Something went wrong, forward this message to @ProjectsChat\n\n" + str(xy))
 
 
 @gladiator(pattern="^/hang(?: |$)(.*)")
@@ -51,7 +45,7 @@ async def gladiators(event):
         await event.client.send_message(event.chat, mesg)
         await asyncio.sleep(1.5)
     except Exception as xy:
-      await event.reply("Oops!! Something went wrong, forward this message to @Gladiators_Support\n\n" + str(xy))
+      await event.reply("Oops!! Something went wrong, forward this message to @ProjectsChat\n\n" + str(xy))
 
 
 
@@ -65,7 +59,7 @@ async def gladiators(event):
         await event.client.send_message(event.chat_id, i)
         await asyncio.sleep(1.5)
     except Exception as xy:
-      await event.reply("Oops!! Something went wrong, forward this message to @Gladiators_Support\n\n" + str(xy))
+      await event.reply("Oops!! Something went wrong, forward this message to @ProjectsChat\n\n" + str(xy))
 
 
 @gladiator(pattern="^/dspam(?: |$)(.*)")
@@ -81,7 +75,7 @@ async def gladiators(event):
         await event.client.send_message(event.chat_id, mesg)
         await asyncio.sleep(tme)
     except Exception as xy:
-      await event.reply("Oops!! Something went wrong, forward this message to @Gladiators_Support\n\n" + str(xy))
+      await event.reply("Oops!! Something went wrong, forward this message to @ProjectsChat\n\n" + str(xy))
 
 
 
@@ -100,7 +94,7 @@ async def gladiators(e):
           await asyncio.sleep(2)
         os.remove(media)
       except Exception as xy:
-        await e.reply("Oops!! Something went wrong, forward this message to @Gladiators_Support\n\n" + str(xy))
+        await e.reply("Oops!! Something went wrong, forward this message to @ProjectsChat\n\n" + str(xy))
 
 
 @gladiator(pattern="^/packspam(?: |$)(.*)")
@@ -130,7 +124,7 @@ async def _(e):
           await e.client.send_file(e.chat_id, file=(xx))
           await asyncio.sleep(2)
       except Exception as xy:
-        await e.reply("Oops!! Something went wrong, forward this message to @Gladiators_Support\n\n" + str(xy))
+        await e.reply("Oops!! Something went wrong, forward this message to @ProjectsChat\n\n" + str(xy))
         
         
 
@@ -146,7 +140,7 @@ async def gladiators(event):
         await event.client.send_message(event.chat, mesg)
         await asyncio.sleep(2)
     except Exception as xy:
-      await event.reply("Oops!! Something went wrong, forward this message to @Gladiators_Support\n\n" + str(xy))
+      await event.reply("Oops!! Something went wrong, forward this message to @ProjectsChat\n\n" + str(xy))
 
 
 
@@ -160,4 +154,4 @@ async def gladiators(event):
         await event.client.send_message(event.chat, xD)
         await asyncio.sleep(2)
     except Exception as xy:
-      await event.reply("Oops!! Something went wrong, forward this message to @Gladiators_Support\n\n" + str(xy))
+      await event.reply("Oops!! Something went wrong, forward this message to @ProjectsChat\n\n" + str(xy))
