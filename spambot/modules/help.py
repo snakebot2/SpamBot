@@ -1,72 +1,39 @@
-import importlib
-import time
-import re
-from datetime import datetime
-from math import ceil
-from sys import argv
-from spambot.events import gladiator
-from spambot import (
-    DEV_USERS,
-    OWNER_ID,
-    MASTER_NAME,
-    Start_time,
-    SUDO_USERS
-)
-from spambot import (
-    ALLOW_EXCL,
-    CERT_PATH,
-    TOKEN,
-    URL,
-    dispatcher,
-    StartTime,
-    telethn,
-    pbot,
-    updater,
-)
 import asyncio
-import io
-import os
-from asyncio import sleep
-from telethon import utils
-from spambot.modules.helper_funcs.chat_status import dev_plus, sudo_plus
-from spambot.modules.helper_funcs.extraction import extract_user
-from telegram.ext import CallbackContext, CommandHandler, run_async, CallbackQueryHandler, MessageHandler, DispatcherHandlerStop
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
+from hackingaibot import gladiator, StartTime, OWNER_ID, OWNER_NAME, REPO_NAME, SUDO_USERS, DEV_USERS
+from telethon import events, custom, Button
+from datetime import datetime
+import time
 
 
-
-def TeamArsenic_time(milliseconds: int) -> str:
-    """Inputs time in milliseconds, to get beautified time,
-    as string"""
+def get_uptime(milliseconds: int) -> str:
     seconds, milliseconds = divmod(int(milliseconds), 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     weeks, days = divmod(days, 7)
-    TeamArsenic_ret = (
+    uptime_ret = (
         ((str(weeks) + "ᴡ:") if weeks else "")
         + ((str(days) + "ᴅ:") if days else "")
         + ((str(hours) + "ʜ:") if hours else "")
         + ((str(minutes) + "ᴍ:") if minutes else "")
         + ((str(seconds) + "s:") if seconds else "")
     )
-    if TeamArsenic_ret.endswith(":"):
-        return TeamArsenic_ret[:-1]
+    if uptime_ret.endswith(":"):
+        return uptime_ret[:-1]
     else:
-        return TeamArsenic_ret
+        return uptime_ret
 
-DEFAULTUSER = str(MASTER_NAME)
+DEFAULTUSER = str(OWNER_NAME)
 help_img = "https://telegra.ph/file/6e92103071aa47ee7023e.mp4"
+
 dev_caption = """
 **ıllıllı★ 𝙷𝚎𝚕𝚙 𝙼𝚎𝚗𝚞 ★ıllıllı**
 
 
-**/ping:** Check ping of the server!!
-**/addsudo:** Use this while replying to anyone will add him as a sudo user!!
-**/rmsudo:** Use this while replying to anyone will remove him from sudo user!!
-**/leave <chat id>:** Bot will leave that chat!!
-**/updates:** Check new updates and updates the bot!!
-**/restart:** Restarts the bot!!(Too fast!! **Supersonic**)
+**/ping:** Check ping of the server.
+**/logs:** Get logs of your heroku app.
+**/usage:** Check usage of your heroku app.
+**/restart:** Restarts the bot.(Too fast!! **Supersonic**)
 
 [©️](https://telegra.ph/file/6e92103071aa47ee7023e.mp4) @TeamGladiators
 """
@@ -85,18 +52,11 @@ Syntax: /mspam <counter>
 Syntax: /packspam (replying to any sticker)
 **/hang:** Spams hanging message for given counter!!
 Syntax: /hang <counter>
-**/curse:** Activates curse on the user for given range!!
-Syntax: /curse @telegram 10 or /curse 10 (replying to anyone)
-**/ucurse:** Activates curse on the user for unlimited range!!
-Syntax: /ucurse @telegram or /ucurse (replying to anyone)
-**/replycurse:** Activates reply and curse on the user!!
-Syntax: /replycurse (replying to anyone)
-**/dreplycurse:** Deactivates reply and curse on the user!!
-Syntax: /dreplycurse (replying to anyone)
 
 [©️](https://telegra.ph/file/6e92103071aa47ee7023e.mp4) @TeamGladiators
 """
 start_img = "https://telegra.ph/file/1312f063f0395fc933edd.mp4"
+
 help_caption = """
 **Hᴇʏ ᴍᴀsᴛᴇʀ,
 ʏᴏᴜ ᴄᴀɴ ᴀᴄᴄᴇss ᴛʜᴇ ᴡʜᴏʟᴇ ʜᴇʟᴘ ᴍᴇɴᴜ ʙʏ ᴜsɪɴɢ ᴛʜᴇ ɢɪᴠᴇɴ ʙᴜᴛᴛᴏɴs!**
@@ -121,129 +81,106 @@ close_caption = """
 """
 helpbuttons = [
     [
-        InlineKeyboardButton(text="Sᴘᴀᴍ Cᴍᴅs", callback_data="spamcmds"),
-        InlineKeyboardButton(text="Dᴇᴠ Cᴍᴅs", callback_data="devcmds")
+        Button.inline("Sᴘᴀᴍ Cᴍᴅs", data="spamcmds"),
+        Button.inline("Dᴇᴠ Cᴍᴅs", data="devcmds")
     ],
     [
-        InlineKeyboardButton(text="Cʜᴇᴄᴋ Pɪɴɢ", callback_data="pings")
+        Button.inline("Cʜᴇᴄᴋ Pɪɴɢ", data="pings")
     ],
     [
-        InlineKeyboardButton(text="Cʟᴏsᴇ", callback_data="close")
+        Button.inline("Cʟᴏsᴇ", data="close")
     ]
 ]
 
 help_buttons = [
     [
-        InlineKeyboardButton(text="Bᴀᴄᴋ", callback_data="back"),
-        InlineKeyboardButton(text="Cʟᴏsᴇ", callback_data="close")
+        Button.inline("Bᴀᴄᴋ", data="back"),
+        Button.inline("Cʟᴏsᴇ", data="close")
     ]
 ]
 startbuttons = [
     [
-        InlineKeyboardButton(
-            text="Repo", url="https://github.com/Gladiators-Projects/SpamBot"),
-        InlineKeyboardButton(
-            text="Support", url=f"https://t.me/Gladiators_Support"
-        ),
+        Button.url("Repo", url="https://github.com/Gladiators-Projects/SpamBot"),
+        Button.url("Support", url=f"https://t.me/Gladiators_Support"),
     ],
     [
-        InlineKeyboardButton(
-            text="Github Organisation", url="https://github.com/Gladiators-Projects"),
+        Button.url("Github Organisation", url="https://github.com/Gladiators-Projects")
     ]
 ]
   
 openbuttons = [
     [
-        InlineKeyboardButton(text="Oᴘᴇɴ Aɢᴀɪɴ", callback_data="open")
+        Button.inline("Oᴘᴇɴ Aɢᴀɪɴ", data="open")
     ]
 ]
-   
-@run_async
-def start(update: Update, context: CallbackContext):
-    if update.effective_chat.type != "private":
-        return
-    update.effective_message.reply_text(
-        start_caption,
-        reply_markup=InlineKeyboardMarkup(startbuttons),
-        parse_mode=ParseMode.MARKDOWN,
-        timeout=60,
-    )
-@run_async
-@sudo_plus
-def help(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(
-        help_caption,
-        reply_markup=InlineKeyboardMarkup(helpbuttons),
-        parse_mode=ParseMode.MARKDOWN,
-        timeout=60,
-    )
 
+@gladiator.on(events.NewMessage(incoming=True, pattern="^/help(?: |$)(.*)", func=lambda e: e.is_private))
+async def alive(e):
+    if e.sender_id in SUDO_USERS or e.sender_id in DEV_USERS:
+        try:
+            await e.reply(start_caption, buttons=startbuttons)
+        except:
+            await e.client.send_message(e.chat_id, start_caption, buttons=startbuttons)
 
-@run_async
-@sudo_plus
-def help_menu(update, context):
-    query = update.callback_query
-    if query.data == "spamcmds":
-        query.message.edit_text(
-            text=spam_caption,
-            reply_markup=InlineKeyboardMarkup(help_buttons),
-            parse_mode=ParseMode.MARKDOWN,
+@gladiator.on(events.NewMessage(incoming=True, pattern="^/start(?: |$)(.*)"))
+async def alive(e):
+    try:
+        await e.reply(help_caption, buttons=helpbuttons)
+    except:
+        await e.client.send_message(e.chat_id, help_caption, buttons=helpbuttons)
+
+@gladiator.on(events.CallbackQuery())
+async def chat(event):
+    if event.data == b"spamcmds":
+        chcksudo = int(event.chat_id)
+        if chcksudo not in SUDO_USERS:
+            return
+        await event.edit(
+            spam_caption,
+            buttons=help_buttons,
         )
-    if query.data == "devcmds":
-        query.message.edit_text(
-            text=dev_caption,
-            reply_markup=InlineKeyboardMarkup(help_buttons),
-            parse_mode=ParseMode.MARKDOWN,
-        )
-    if query.data == "pings":
+    elif event.data == b"pings":
+        chcksudo = int(event.chat_id)
+        if chcksudo not in SUDO_USERS:
+            return
         ping_start = datetime.now()
         ping_end = datetime.now()
-        ms = (ping_end-ping_start).microseconds / 1000
-        uptime = TeamArsenic_time((time.time() - Start_time) * 1000)
-        pong = f"""
-        •• Pᴏɴɢ !! ••
-        ⏱ Pɪɴɢ sᴘᴇᴇᴅ : {ms}ᴍs
-        ⏳ Uᴘᴛɪᴍᴇ - {uptime}
-        """
-        query.answer(pong, alert=True)
-    if query.data == "back":
-        query.message.edit_text(
-            text=help_caption,
-            reply_markup=InlineKeyboardMarkup(helpbuttons),
-            parse_mode=ParseMode.MARKDOWN,
+        ms = (ping_end-ping_start).microseconds
+        uptime = get_uptime((time.time() - StartTime) * 1000)
+        pomg = f"•• Pᴏɴɢ !! ••\n⏱ Pɪɴɢ sᴘᴇᴇᴅ : {ms}ᴍs\n⏳ Uᴘᴛɪᴍᴇ - {uptime}"
+        await event.edit(
+            pomg,
+            buttons=help_buttons,
         )
-    if query.data == "open":
-        query.message.edit_text(
-            text=help_caption,
-            reply_markup=InlineKeyboardMarkup(helpbuttons),
-            parse_mode=ParseMode.MARKDOWN,
+    elif event.data == b"back":
+        chcksudo = int(event.chat_id)
+        if chcksudo not in SUDO_USERS:
+            return
+        await event.edit(
+            help_caption,
+            buttons=helpbuttons,
         )
-    if query.data == "close":
-        query.message.edit_text(
-            text=close_caption,
-            reply_markup=InlineKeyboardMarkup(openbuttons),
-            parse_mode=ParseMode.MARKDOWN,
+    elif event.data == b"devcmds":
+        chcksudo = int(event.chat_id)
+        if chcksudo not in SUDO_USERS:
+            return
+        await event.edit(
+            dev_caption,
+            buttons=help_buttons,
         )
-
-
-
-
-
-
-start_handler = CommandHandler("start", start)
-help_handler = CommandHandler("help", help)
-spamcmds_handler = CallbackQueryHandler(help_menu, pattern="spamcmds")
-devcmds_handler = CallbackQueryHandler(help_menu, pattern="devcmds")
-back_handler = CallbackQueryHandler(help_menu, pattern="back")
-open_handler = CallbackQueryHandler(help_menu, pattern="open")
-close_handler = CallbackQueryHandler(help_menu, pattern="close")
-PINGS_HANDLER = CallbackQueryHandler(help_menu, pattern="pings")
-
-dispatcher.add_handler(PINGS_HANDLER)
-dispatcher.add_handler(start_handler)
-dispatcher.add_handler(help_handler)
-dispatcher.add_handler(open_handler)
-dispatcher.add_handler(close_handler)
-dispatcher.add_handler(spamcmds_handler)
-dispatcher.add_handler(devcmds_handler)
-dispatcher.add_handler(back_handler)
+    elif event.data == b"open":
+        chcksudo = int(event.chat_id)
+        if chcksudo not in SUDO_USERS:
+            return
+        await event.edit(
+            help_caption,
+            buttons=helpbuttons,
+        )
+    elif event.data == b"close":
+        chcksudo = int(event.chat_id)
+        if chcksudo not in SUDO_USERS:
+            return
+        await event.edit(
+            close_caption,
+            buttons=openbuttons,
+        )

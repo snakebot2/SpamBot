@@ -4,7 +4,7 @@ Credits to:
   t.me/TeamUltroid
 """
 
-from spambot.events import gladiator
+from spambot import gladiator
 from spambot import (
     DEV_USERS,
     OWNER_ID,
