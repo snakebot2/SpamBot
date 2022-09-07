@@ -118,16 +118,17 @@ openbuttons = [
 async def alive(e):
     if e.sender_id in SUDO_USERS or e.sender_id in DEV_USERS:
         try:
-            await e.reply(start_caption, buttons=startbuttons)
+            await e.reply(help_caption, buttons=helpbuttons)
         except:
-            await e.client.send_message(e.chat_id, start_caption, buttons=startbuttons)
+            await e.client.send_message(e.chat_id, help_caption, buttons=helpbuttons)
+            
 
 @gladiator.on(events.NewMessage(incoming=True, pattern="^/start(?: |$)(.*)"))
 async def alive(e):
     try:
-        await e.reply(help_caption, buttons=helpbuttons)
+        await e.reply(start_caption, buttons=startbuttons)
     except:
-        await e.client.send_message(e.chat_id, help_caption, buttons=helpbuttons)
+        await e.client.send_message(e.chat_id, start_caption, buttons=startbuttons)
 
 @gladiator.on(events.CallbackQuery())
 async def chat(event):
