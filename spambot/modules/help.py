@@ -101,7 +101,7 @@ help_buttons = [
 startbuttons = [
     [
         Button.url("Repo", url="https://github.com/Gladiators-Projects/SpamBot"),
-        Button.url("Support", url=f"https://t.me/Gladiators_Support"),
+        Button.url("Support", url=f"https://t.me/ProjectsChat"),
     ],
     [
         Button.url("Github Organisation", url="https://github.com/Gladiators-Projects")
