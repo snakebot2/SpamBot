@@ -32,7 +32,6 @@
 
 ## 📌 Cʀᴇᴅɪᴛs 
 * [![TeamGladiators-Devs](https://img.shields.io/static/v1?label=TeamGladiators&message=Devs&color=critical)](https://t.me/Gladiators_Devs)
-* [Ultroid](https://github.com/TeamUltroid/Ultroid) For Some Plugins
 
 
 ```
