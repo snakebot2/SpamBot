@@ -35,7 +35,7 @@ dev_caption = """
 **/usage:** Check usage of your heroku app.
 **/restart:** Restarts the bot.(Too fast!! **Supersonic**)
 
-[©️](https://telegra.ph/file/6e92103071aa47ee7023e.mp4) @Gladiators_Projects
+[©️](https://telegra.ph/file/6e92103071aa47ee7023e.mp4) @AboutPunjabi0
 """
 spam_caption = """
 **ıllıllı★ 𝙷𝚎𝚕𝚙 𝙼𝚎𝚗𝚞 ★ıllıllı**
@@ -53,7 +53,7 @@ Syntax: /packspam (replying to any sticker)
 **/hang:** Spams hanging message for given counter!!
 Syntax: /hang <counter>
 
-[©️](https://telegra.ph/file/6e92103071aa47ee7023e.mp4) @Gladiators_Projects
+[©️](https://telegra.ph/file/6e92103071aa47ee7023e.mp4) @AboutPunjabi0
 """
 start_img = "https://telegra.ph/file/1312f063f0395fc933edd.mp4"
 
@@ -61,7 +61,7 @@ help_caption = """
 **Hᴇʏ ᴍᴀsᴛᴇʀ,
 ʏᴏᴜ ᴄᴀɴ ᴀᴄᴄᴇss ᴛʜᴇ ᴡʜᴏʟᴇ ʜᴇʟᴘ ᴍᴇɴᴜ ʙʏ ᴜsɪɴɢ ᴛʜᴇ ɢɪᴠᴇɴ ʙᴜᴛᴛᴏɴs!**
 
-[©️](https://telegra.ph/file/6e92103071aa47ee7023e.mp4) @Gladiators_Projects
+[©️](https://telegra.ph/file/6e92103071aa47ee7023e.mp4) @AboutPunjabi0
 """
 start_caption = f"""
 **Nᴏᴡ ᴍᴇ ᴛᴏ ɪɴᴛʀᴏᴅᴜᴄᴇ ᴍʏsᴇʟғ.
@@ -72,12 +72,12 @@ I ᴄᴀɴ sᴘᴀᴍ ᴄᴏɴᴛɪɴᴜᴏsʟʏ ᴡɪᴛʜ ʟᴇss ғʟᴏᴏ�
 **█▓▒­░⡷⠂ᗰᗩՏTᗴᖇ⠂⢾░▒▓█**
 **『 [{DEFAULTUSER}](tg://user?id={OWNER_ID}) 』**
 
-[©️](https://telegra.ph/file/ec3c057fcba5594151601.jpg) @Gladiators_Projects
+[©️](https://telegra.ph/file/ec3c057fcba5594151601.jpg) @AboutPunjabi0
 """
 close_caption = """
 **Hᴇʟᴘ ᴍᴇɴᴜ ʜᴀs ʙᴇᴇɴ ᴄʟᴏsᴇᴅ!!**
 
-©️ @Gladiators_Projects
+©️ @AboutPunjabi0
 """
 helpbuttons = [
     [
@@ -100,11 +100,11 @@ help_buttons = [
 ]
 startbuttons = [
     [
-        Button.url("Repo", url="https://github.com/Gladiators-Projects/SpamBot"),
-        Button.url("Support", url=f"https://t.me/ProjectsChat"),
+        Button.url("group", url="https://t.me/gossipfrnd"),
+        Button.url("Support", url=f"https://t.me/AboutPunjabi0"),
     ],
     [
-        Button.url("Github Organisation", url="https://github.com/Gladiators-Projects")
+        Button.url("Owner", url="@punjabixsandhu")
     ]
 ]
   
